@@ -45,6 +45,7 @@ function App() {
         <Navbar />
         <Body>
           {/* <StartCanvas /> */}
+          
           {/* <WaveCanvas /> */}
           <div>
             <Hero />
