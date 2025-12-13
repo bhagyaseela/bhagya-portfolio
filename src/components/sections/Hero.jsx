@@ -7,13 +7,16 @@ import HeroBgAnimation from "../HeroBgAnimation";
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import {
-  headContainerAnimation,
-  headContentAnimation,
-  headTextAnimation,
+    headContainerAnimation,
+    headContentAnimation,
+    headTextAnimation,
 } from "../../utils/motion";
 import StarCanvas from "../canvas/Stars";
+import Spline from "@splinetool/react-spline";
+
 
 const HeroContainer = styled.div`
+  
   display: flex;
   justify-content: center;
   position: relative;
@@ -30,19 +33,42 @@ const HeroContainer = styled.div`
 
   clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
 `;
+
+
 const HeroInnerContainer = styled.div`
+
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1500px;
 
   @media (max-width: 960px) {
     flex-direction: column;
   }
 `;
+
+const HeroMiddleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  iframe, canvas {
+    width: 100%;
+    max-width: 380px;
+    height: 420px;
+  }
+
+  @media (max-width: 960px) {
+    order: 1;
+    margin-bottom: 40px;
+  }
+`;
+
 const HeroLeftContainer = styled.div`
+// border: 1px solid red;
   width: 100%;
   order: 1;
   @media (max-width: 960px) {
@@ -55,35 +81,37 @@ const HeroLeftContainer = styled.div`
   }
 `;
 const HeroRightContainer = styled.div`
+//   border: 1px solid red;
   width: 100%;
-  order: 2;
+  padding-left: 120px;
+  order: 3;
   display: flex;
-  justify-content: end;
+  justify-content: center;
   @media (max-width: 960px) {
-    order: 1;
+    order: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-contents: center;
-    margin-bottom: 80px;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 960px) {
     margin-bottom: 30px;
+    height: 400px;
   }
 `;
 
 const Title = styled.div`
-  font-weight: 700;
-  font-size: 50px;
+  font-weight: 800;
+  font-size: 55px;
   color: ${({ theme }) => theme.text_primary};
   line-height: 68px;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
     text-align: center;
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
     font-size: 40px;
     line-height: 48px;
     margin-bottom: 8px;
@@ -92,9 +120,9 @@ const Title = styled.div`
 
 const TextLoop = styled.div`
   font-weight: 600;
-  font-size: 32px;
+  font-size: 30px;
   display: flex;
-  gap: 12px;
+  gap: 6px;
   color: ${({ theme }) => theme.text_primary};
   line-height: 68px;
 
@@ -192,9 +220,10 @@ const Img = styled.img`
 `;
 
 const HeroBg = styled.div`
+//   border: 1px solid white;
   position: absolute;
   display: flex;
-  justify-content: end;
+  justify-content: center;
   top: 0;
   right: 0;
   bottom: 0;
@@ -216,55 +245,76 @@ const HeroBg = styled.div`
 `;
 
 const Hero = () => {
-  return (
-    <div id="About">
-      <HeroContainer>
-        <HeroBg>
-          <StarCanvas />
-          <HeroBgAnimation />
-        </HeroBg>
+    return (
+        <div id="About">
+            <HeroContainer>
+                <HeroBg>
+                    {/* <StarCanvas /> */}
+                    <HeroBgAnimation />
+                </HeroBg>
 
-        <motion.div {...headContainerAnimation}>
-          <HeroInnerContainer>
-            <HeroLeftContainer>
-              <motion.div {...headTextAnimation}>
-                <Title>
-                  Hi, I am <br /> {Bio.name}
-                </Title>
-                <TextLoop>
-                  I am a
-                  <Span>
-                    <Typewriter
-                      options={{
-                        strings: Bio.roles,
-                        autoStart: true,
-                        loop: true,
-                      }}
-                    />
-                  </Span>
-                </TextLoop>
-              </motion.div>
+                <motion.div {...headContainerAnimation}>
+                    <HeroInnerContainer>
 
-              <motion.div {...headContentAnimation}>
-                <SubTitle>{Bio.description}</SubTitle>
-              </motion.div>
+                        {/* MIDDLE – 3D ROBOT */}
+                        <HeroRightContainer>
+                            {/* <motion.div {...headContentAnimation}> */}
+                            <Spline scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
+                                // onLoad={(spline) => {
+                                //     spline.setPixelRatio(window.devicePixelRatio);
+                                // }}
+                                style={{
+                                    width: "100%",
+                                    height: "750px",
+                                    // transform: "scale(2)",
+                                }}
+                            />
+                            {/* </motion.div> */}
+                        </HeroRightContainer>
 
-              <ResumeButton href={Bio.resume} target="_blank">
-                Check Resume
-              </ResumeButton>
-            </HeroLeftContainer>
-            <HeroRightContainer>
+                        <HeroLeftContainer>
+                            <motion.div {...headTextAnimation}>
+                                <Title>
+                                    Hi, I am <br /> {Bio.name}
+                                </Title>
+                                <TextLoop>
+                                    I am a
+                                    <Span>
+                                        <Typewriter
+                                            options={{
+                                                strings: Bio.roles,
+                                                autoStart: true,
+                                                loop: true,
+                                            }}
+                                        />
+                                    </Span>
+                                </TextLoop>
+                            </motion.div>
+
+                            <motion.div {...headContentAnimation}>
+                                <SubTitle>{Bio.description}</SubTitle>
+                            </motion.div>
+
+                            <ResumeButton href={Bio.resume} target="_blank">
+                                Check Resume
+                            </ResumeButton>
+                        </HeroLeftContainer>
+
+
+
+                        {/* <HeroRightContainer>
               <motion.div {...headContentAnimation}>
                 <Tilt>
                   <Img src={HeroImg} alt="Rishav Chanda" />
                 </Tilt>
               </motion.div>
-            </HeroRightContainer>
-          </HeroInnerContainer>
-        </motion.div>
-      </HeroContainer>
-    </div>
-  );
+            </HeroRightContainer> */}
+
+                    </HeroInnerContainer>
+                </motion.div>
+            </HeroContainer>
+        </div>
+    );
 };
 
 export default Hero;

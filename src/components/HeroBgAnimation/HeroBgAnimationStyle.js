@@ -2,6 +2,6 @@ import styled from 'styled-components';
 
 
 export const Div = styled.div`
-    width:600px;
+    width:800px;
     height: 500px;
 `
