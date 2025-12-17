@@ -250,7 +250,7 @@ const Hero = () => {
             <HeroContainer>
                 <HeroBg>
                     {/* <StarCanvas /> */}
-                    <HeroBgAnimation />
+                    {/* <HeroBgAnimation /> */}
                 </HeroBg>
 
                 <motion.div {...headContainerAnimation}>

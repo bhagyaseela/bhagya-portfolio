@@ -6,6 +6,7 @@ import { MenuRounded } from "@mui/icons-material";
 
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
+  opacity: 0.9;
   height: 80px;
   display: flex;
   align-items: center;

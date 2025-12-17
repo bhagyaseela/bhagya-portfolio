@@ -9,6 +9,7 @@ import Experience from "./components/sections/Experience";
 import Education from "./components/sections/Education";
 import StartCanvas from "./components/canvas/Stars";
 import WaveCanvas from "./components/canvas/wave";
+import TechCanvas from "./components/canvas/Tech";
 import Projects from "./components/sections/Projects";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/sections/Footer";
@@ -18,6 +19,7 @@ const Body = styled.div`
   width: 100%;
   overflow-x: hidden;
   position: relative;
+  
 `;
 
 const Wrapper = styled.div`
@@ -39,13 +41,14 @@ const Wrapper = styled.div`
 
 function App() {
   return (
+    // <ThemeProvider theme={lightTheme}>
     <ThemeProvider theme={darkTheme}>
         
       <BrowserRouter>
         <Navbar />
         <Body>
           {/* <StartCanvas /> */}
-          
+            <TechCanvas />
           {/* <WaveCanvas /> */}
           <div>
             <Hero />
