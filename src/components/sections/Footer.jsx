@@ -5,7 +5,7 @@ import {
   FacebookRounded,
   Instagram,
   LinkedIn,
-  Twitter,
+  GitHub,
 } from "@mui/icons-material";
 
 const FooterContainer = styled.div`
@@ -84,7 +84,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <FooterWrapper>
-        <Logo>Rishav Chanda</Logo>
+        <Logo>Bhagya Senavirathna</Logo>
         <Nav>
           <NavLink href="#About">About</NavLink>
           <NavLink href="#Skills">Skills</NavLink>
@@ -96,8 +96,8 @@ const Footer = () => {
           <SocialMediaIcon href={Bio.facebook} target="display">
             <FacebookRounded />
           </SocialMediaIcon>
-          <SocialMediaIcon href={Bio.twitter} target="display">
-            <Twitter />
+          <SocialMediaIcon href={Bio.github} target="display">
+            <GitHub />
           </SocialMediaIcon>
           <SocialMediaIcon href={Bio.linkedin} target="display">
             <LinkedIn />
@@ -106,7 +106,7 @@ const Footer = () => {
             <Instagram />
           </SocialMediaIcon>
         </SocialMediaIcons>
-        <Copyright>&copy; 2024 Rishav Chanda. All rights reserved.</Copyright>
+        <Copyright>&copy; 2026 Bhagya Senavirathna. All rights reserved.</Copyright>
       </FooterWrapper>
     </FooterContainer>
   );
