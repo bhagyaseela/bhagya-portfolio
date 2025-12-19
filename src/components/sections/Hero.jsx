@@ -258,21 +258,6 @@ const Hero = () => {
 
                         {/* MIDDLE – 3D ROBOT */}
                         <HeroRightContainer>
-                            {/* <motion.div {...headContentAnimation}> */}
-                            <Spline scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
-                                // onLoad={(spline) => {
-                                //     spline.setPixelRatio(window.devicePixelRatio);
-                                // }}
-                                style={{
-                                    width: "100%",
-                                    height: "750px",
-                                    // transform: "scale(2)",
-                                }}
-                            />
-                            {/* </motion.div> */}
-                        </HeroRightContainer>
-
-                        <HeroLeftContainer>
                             <motion.div {...headTextAnimation}>
                                 <Title>
                                     Hi, I am <br /> {Bio.name}
@@ -298,6 +283,23 @@ const Hero = () => {
                             <ResumeButton href={Bio.resume} target="_blank">
                                 Check Resume
                             </ResumeButton>
+                            
+                        </HeroRightContainer>
+
+                        <HeroLeftContainer>
+                            {/* <motion.div {...headContentAnimation}> */}
+                            <Spline scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
+                                // onLoad={(spline) => {
+                                //     spline.setPixelRatio(window.devicePixelRatio);
+                                // }}
+                                style={{
+                                    width: "100%",
+                                    height: "750px",
+                                    // transform: "scale(2)",
+                                }}
+                            />
+                            {/* </motion.div> */}
+                            
                         </HeroLeftContainer>
 
 
