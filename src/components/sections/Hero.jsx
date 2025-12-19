@@ -16,11 +16,12 @@ import Spline from "@splinetool/react-spline";
 
 
 const HeroContainer = styled.div`
-  
+
+//   border: 1px solid white;  
   display: flex;
   justify-content: center;
   position: relative;
-  padding: 80px 30px;
+  padding: 100px 10px;
   z-index: 1;
 
   @media (max-width: 960px) {
@@ -36,13 +37,14 @@ const HeroContainer = styled.div`
 
 
 const HeroInnerContainer = styled.div`
+    // border: 1px solid blue;
 
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1500px;
+  max-width: 1900px;
 
   @media (max-width: 960px) {
     flex-direction: column;
@@ -67,39 +69,45 @@ const HeroMiddleContainer = styled.div`
   }
 `;
 
-const HeroLeftContainer = styled.div`
-// border: 1px solid red;
+const HeroRightContainer = styled.div`
+// border: 1px solid green;
   width: 100%;
-  order: 1;
+  order: 2;
+//   overflow: visible;
+  padding-right: 260px;
+  position: relative;
+  left:-200px;
   @media (max-width: 960px) {
-    order: 2;
-    margin-bottom: 30px;
+  width: 100%;
+    order: 1;
+    padding-right: 0px;
+    margin-bottom: 30px
     display: flex;
     gap: 6px;
     flex-direction: column;
     align-items: center;
   }
 `;
-const HeroRightContainer = styled.div`
+const HeroLeftContainer = styled.div`
 //   border: 1px solid red;
-  width: 100%;
-  padding-left: 120px;
-  order: 3;
+  width: 800px;
+  order: 1;
+
   display: flex;
-  justify-content: center;
-  @media (max-width: 960px) {
-    order: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-contents: center;
-  }
+  justify-content: ; /* align content left */
+  align-items: flex-start;
+
+  overflow: visible; /* allow overflow */
 
   @media (max-width: 960px) {
-    margin-bottom: 30px;
+    order: 2;
+    flex-direction: column;
+    align-items: center;
     height: 400px;
+    margin-bottom: 30px;
   }
 `;
+
 
 const Title = styled.div`
   font-weight: 800;
@@ -257,6 +265,22 @@ const Hero = () => {
                     <HeroInnerContainer>
 
                         {/* MIDDLE – 3D ROBOT */}
+                        <HeroLeftContainer>
+                            {/* <motion.div {...headContentAnimation}> */}
+                            <Spline scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
+                                // onLoad={(spline) => {
+                                //     spline.setPixelRatio(window.devicePixelRatio);
+                                // }}
+                                style={{
+                                    width: "800px",
+                                    height: "750px",
+                                    // border: "1px solid green",
+                                    // transform: "scale(2)",
+                                }}
+                            />
+                            {/* </motion.div> */}
+                        </HeroLeftContainer>
+
                         <HeroRightContainer>
                             <motion.div {...headTextAnimation}>
                                 <Title>
@@ -283,24 +307,7 @@ const Hero = () => {
                             <ResumeButton href={Bio.resume} target="_blank">
                                 Check Resume
                             </ResumeButton>
-                            
                         </HeroRightContainer>
-
-                        <HeroLeftContainer>
-                            {/* <motion.div {...headContentAnimation}> */}
-                            <Spline scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
-                                // onLoad={(spline) => {
-                                //     spline.setPixelRatio(window.devicePixelRatio);
-                                // }}
-                                style={{
-                                    width: "100%",
-                                    height: "750px",
-                                    // transform: "scale(2)",
-                                }}
-                            />
-                            {/* </motion.div> */}
-                            
-                        </HeroLeftContainer>
 
 
 
