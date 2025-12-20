@@ -13,9 +13,12 @@ const Nav = styled.div`
   justify-content: center;
   font-size: 1rem;
   position: sticky;
-  top: 0;
-  z-index: 10;
   color: white;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(14px);
+  background: rgba(10, 10, 20, 0.75);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 `;
 
 const NavbarContainer = styled.div`
@@ -74,21 +77,28 @@ const ButtonContainer = styled.div`
 `;
 
 const GithubButton = styled.a`
-  border: 1px solid ${({ theme }) => theme.primary};
-  color: ${({ theme }) => theme.primary};
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  border-radius: 20px;
-  cursor: pointer;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: all 0.6s ease-in-out;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 15px;
   text-decoration: none;
+  color: white;
+  background: linear-gradient(
+    135deg,
+    ${({ theme }) => theme.primary},
+    #9b6cff
+  );
+  box-shadow: 0 8px 24px rgba(155, 108, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
   &:hover {
-    background: ${({ theme }) => theme.primary};
-    color: ${({ theme }) => theme.text_primary};
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(155, 108, 255, 0.45);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    text-align: center;
   }
 `;
 
@@ -120,71 +130,113 @@ const MobileMenu = styled.ul`
 
   transition: all 0.6s ease-in-out;
   transform: ${({ isOpen }) =>
-    isOpen ? "translateY(0)" : "translateY(-100%)"};
+        isOpen ? "translateY(0)" : "translateY(-100%)"};
   border-radius: 0 0 20px 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
 `;
 
+const scrollWithOffset = (id) => {
+    const element = document.getElementById(id);
+    const yOffset = -80;
+    const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: "smooth" });
+};
+
+
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const theme = useTheme();
-  return (
-    <Nav>
-      <NavbarContainer>
-        <NavLogo to="/">Seela</NavLogo>
+    const [isOpen, setIsOpen] = useState(false);
+    const theme = useTheme();
+    return (
+        <Nav>
+            <NavbarContainer>
+                <NavLogo to="/">Seela</NavLogo>
 
-        <MobileIcon onClick={() => setIsOpen(!isOpen)}>
-          <MenuRounded style={{ color: "inherit" }} />
-        </MobileIcon>
+                <MobileIcon onClick={() => setIsOpen(!isOpen)}>
+                    <MenuRounded style={{ color: "inherit" }} />
+                </MobileIcon>
 
-        <NavItems>
-          <NavLink href="#About">About</NavLink>
-          <NavLink href="#Skills">Skills</NavLink>
-          <NavLink href="#Experience">Experience</NavLink>
-          <NavLink href="#Projects">Projects</NavLink>
-          <NavLink href="#Education">Education</NavLink>
-        </NavItems>
+                <NavItems>
+                    <NavLink onClick={() => scrollWithOffset("About")}>About</NavLink>
+                    <NavLink onClick={() => scrollWithOffset("Skills")}>Skills</NavLink>
+                    <NavLink onClick={() => scrollWithOffset("Experience")}>Experience</NavLink>
+                    <NavLink onClick={() => scrollWithOffset("Projects")}>Projects</NavLink>
+                    <NavLink onClick={() => scrollWithOffset("Education")}>Education</NavLink>
+                </NavItems>
 
-        {isOpen && (
-          <MobileMenu isOpen={isOpen}>
-            <NavLink onClick={() => setIsOpen(!isOpen)} href="#About">
-              About
-            </NavLink>
-            <NavLink onClick={() => setIsOpen(!isOpen)} href="#Skills">
-              Skills
-            </NavLink>
-            <NavLink onClick={() => setIsOpen(!isOpen)} href="#Experience">
-              Experience
-            </NavLink>
-            <NavLink onClick={() => setIsOpen(!isOpen)} href="#Projects">
-              Projects
-            </NavLink>
-            <NavLink onClick={() => setIsOpen(!isOpen)} href="#Education">
-              Education
-            </NavLink>
-            <GithubButton
-              href={Bio.github}
-              target="_Blank"
-              style={{
-                background: theme.primary,
-                color: theme.text_primary,
-              }}
-            >
-              Github Profile
-            </GithubButton>
-          </MobileMenu>
-        )}
 
-        <ButtonContainer>
-          <GithubButton href={Bio.github} target="_Blank">
-            Github Profile
-          </GithubButton>
-        </ButtonContainer>
-      </NavbarContainer>
-    </Nav>
-  );
+                {isOpen && (
+                    <MobileMenu isOpen={isOpen}>
+                        <NavLink
+                            onClick={() => {
+                                scrollWithOffset("About");
+                                setIsOpen(false);
+                            }}
+                        >
+                            About
+                        </NavLink>
+
+                        <NavLink
+                            onClick={() => {
+                                scrollWithOffset("Skills");
+                                setIsOpen(false);
+                            }}
+                        >
+                            Skills
+                        </NavLink>
+
+                        <NavLink
+                            onClick={() => {
+                                scrollWithOffset("Experience");
+                                setIsOpen(false);
+                            }}
+                        >
+                            Experience
+                        </NavLink>
+
+                        <NavLink
+                            onClick={() => {
+                                scrollWithOffset("Projects");
+                                setIsOpen(false);
+                            }}
+                        >
+                            Projects
+                        </NavLink>
+
+                        <NavLink
+                            onClick={() => {
+                                scrollWithOffset("Education");
+                                setIsOpen(false);
+                            }}
+                        >
+                            Education
+                        </NavLink>
+
+                        <GithubButton
+                            href={Bio.github}
+                            target="_Blank"
+                            style={{
+                                background: theme.primary,
+                                color: theme.text_primary,
+                            }}
+                        >
+                            Github Profile
+                        </GithubButton>
+                    </MobileMenu>
+                )}
+
+                <ButtonContainer>
+                    <GithubButton href={Bio.github} target="_Blank">
+                        Github Profile
+                    </GithubButton>
+                </ButtonContainer>
+            </NavbarContainer>
+        </Nav>
+    );
 };
 
 export default Navbar;
+

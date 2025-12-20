@@ -68,24 +68,26 @@ const HeroMiddleContainer = styled.div`
 `;
 
 const HeroRightContainer = styled.div`
-// border: 1px solid green;
   width: 100%;
   order: 2;
-//   overflow: visible;
   padding-right: 260px;
   position: relative;
-  left:-200px;
+  left: -200px;
+
   @media (max-width: 960px) {
-  width: 100%;
+    padding-right: 0;
+    left: 0;
     order: 1;
-    padding-right: 0px;
-    margin-bottom: 30px
+    margin-bottom: 50px;
+
     display: flex;
-    gap: 6px;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 `;
+
 const HeroLeftContainer = styled.div`
 //   border: 1px solid red;
   width: 800px;
@@ -101,7 +103,7 @@ const HeroLeftContainer = styled.div`
     order: 2;
     flex-direction: column;
     align-items: center;
-    height: 400px;
+    height: 200px;
     margin-bottom: 30px;
   }
 `;
@@ -156,13 +158,14 @@ const SubTitle = styled.div`
 
   @media (max-width: 960px) {
     text-align: center;
-  }
-
-  @media (max-width: 960px) {
+    width: 100%;
+    max-width: 520px;
     font-size: 16px;
-    line-height: 32px;
+    line-height: 28px;
+    margin: 0 auto 32px auto;
   }
 `;
+
 
 const ResumeButton = styled.a`
   -webkit-appearance: button;
@@ -206,10 +209,13 @@ const ResumeButton = styled.a`
     }    
     
     
-    @media (max-width: 640px) {
-        padding: 12px 0;
-        font-size: 18px;
-    } 
+@media (max-width: 640px) {
+  padding: 12px 0;
+  font-size: 18px;
+  margin: 0 auto;
+  text-align: center;
+}
+
     color: white;
 `;
 
@@ -252,6 +258,24 @@ const HeroBg = styled.div`
   }
 `;
 
+const SplineWrapper = styled.div`
+  width: 800px;
+  height: 750px;
+
+  @media (max-width: 960px) {
+    width: 500px;
+    height: 480px;
+    position : relative;
+    left: -80px;
+  }
+
+  @media (max-width: 640px) {
+    width: 320px;
+    height: 300px;
+  }
+`;
+
+
 const Hero = () => {
     return (
         <div id="About">
@@ -267,18 +291,12 @@ const Hero = () => {
                         {/* MIDDLE – 3D ROBOT */}
                         <HeroLeftContainer>
                             <motion.div {...headContentAnimation}>
-                            <Spline scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
-                                // onLoad={(spline) => {
-                                //     spline.setPixelRatio(window.devicePixelRatio);
-                                // }}
-                                style={{
-                                    width: "800px",
-                                    height: "750px",
-                                    // border: "1px solid green",
-                                    // transform: "scale(2)",
-                                    // transform: "rotateY(15deg)",
-                                }}
-                            />
+                                <SplineWrapper>
+                                    <Spline
+                                        scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
+                                        style={{ width: "100%", height: "100%" }}
+                                    />
+                                </SplineWrapper>
                             </motion.div>
                         </HeroLeftContainer>
 
