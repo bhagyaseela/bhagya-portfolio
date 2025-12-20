@@ -13,6 +13,8 @@ import TechCanvas from "./components/canvas/Tech";
 import Projects from "./components/sections/Projects";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/sections/Footer";
+import ForegroundImage from "./components/ForegroundImage";
+
 
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -47,6 +49,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Body>
+            <ForegroundImage />
           {/* <StartCanvas /> */}
             <TechCanvas />
           {/* <WaveCanvas /> */}
