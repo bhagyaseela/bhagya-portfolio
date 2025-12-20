@@ -173,7 +173,9 @@ const ResumeButton = styled.a`
   width: 95%;
   max-width: 300px;
   text-align: center;
-  padding: 16px 0;
+  padding: 16px 0px;
+  margin-top: 50px;
+  margin-left: 150px;
 
   background: hsla(271, 100%, 50%, 1);
   background: linear-gradient(
@@ -264,7 +266,7 @@ const Hero = () => {
 
                         {/* MIDDLE – 3D ROBOT */}
                         <HeroLeftContainer>
-                            {/* <motion.div {...headContentAnimation}> */}
+                            <motion.div {...headContentAnimation}>
                             <Spline scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
                                 // onLoad={(spline) => {
                                 //     spline.setPixelRatio(window.devicePixelRatio);
@@ -274,9 +276,10 @@ const Hero = () => {
                                     height: "750px",
                                     // border: "1px solid green",
                                     // transform: "scale(2)",
+                                    // transform: "rotateY(15deg)",
                                 }}
                             />
-                            {/* </motion.div> */}
+                            </motion.div>
                         </HeroLeftContainer>
 
                         <HeroRightContainer>
