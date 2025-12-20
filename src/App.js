@@ -14,6 +14,8 @@ import Projects from "./components/sections/Projects";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/sections/Footer";
 import ForegroundImage from "./components/ForegroundImage";
+import ForegroundCanvas from "./components/canvas/ForegroundCanvas";
+
 
 
 const Body = styled.div`
@@ -42,34 +44,35 @@ const Wrapper = styled.div`
 
 
 function App() {
-  return (
-    // <ThemeProvider theme={lightTheme}>
-    <ThemeProvider theme={darkTheme}>
-        
-      <BrowserRouter>
-        <Navbar />
-        <Body>
-            <ForegroundImage />
-          {/* <StartCanvas /> */}
-            <TechCanvas />
-          {/* <WaveCanvas /> */}
-          <div>
-            <Hero />
-            <Wrapper>
-              <Skills />
-              <Experience />
-            </Wrapper>
-            <Projects />
-            <Wrapper>
-              <Education />
-              <Contact />
-            </Wrapper>
-            <Footer />
-          </div>
-        </Body>
-      </BrowserRouter>
-    </ThemeProvider>
-  );
+    return (
+        // <ThemeProvider theme={lightTheme}>
+        <ThemeProvider theme={darkTheme}>
+
+            <BrowserRouter>
+                <Navbar />
+                <Body>
+                    <ForegroundImage />
+                    {/* <ForegroundCanvas /> */}
+                    {/* <StartCanvas /> */}
+                    <TechCanvas />
+                    {/* <WaveCanvas /> */}
+                    <div>
+                        <Hero />
+                        <Wrapper>
+                            <Skills />
+                            <Experience />
+                        </Wrapper>
+                        <Projects />
+                        <Wrapper>
+                            <Education />
+                            <Contact />
+                        </Wrapper>
+                        <Footer />
+                    </div>
+                </Body>
+            </BrowserRouter>
+        </ThemeProvider>
+    );
 }
 
 export default App;
