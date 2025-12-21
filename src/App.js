@@ -1,6 +1,6 @@
+import { useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { darkTheme } from "./utils/Themes";
-import { lightTheme } from "./utils/Themes";
+import { darkTheme, lightTheme } from "./utils/Themes";
 import Navbar from "./components/Navbar";
 import { BrowserRouter } from "react-router-dom";
 import Hero from "./components/sections/Hero";
@@ -42,19 +42,26 @@ const Wrapper = styled.div`
   clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 98%, 0 100%);
 `;
 
-
 function App() {
+    const [isDark, setIsDark] = useState(true);
+
+    const toggleTheme = () => {
+        setIsDark((prev) => !prev);
+    };
+
     return (
         // <ThemeProvider theme={lightTheme}>
-        <ThemeProvider theme={darkTheme}>
-
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
             <BrowserRouter>
-                <Navbar />
+                <Navbar toggleTheme={toggleTheme} isDark={isDark} />
                 <Body>
                     <ForegroundImage />
                     {/* <ForegroundCanvas /> */}
                     {/* <StartCanvas /> */}
-                    <TechCanvas />
+                    <TechCanvas
+                        key={isDark ? "tech-dark" : "tech-light"}
+                        isDark={isDark}
+                    />
                     {/* <WaveCanvas /> */}
                     <div>
                         <Hero />

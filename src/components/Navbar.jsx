@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link as LinkR } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
 import { Bio } from "../data/constants";
-import { MenuRounded } from "@mui/icons-material";
+import { MenuRounded, LightMode, DarkMode } from "@mui/icons-material";
+
 
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -137,6 +138,30 @@ const MobileMenu = styled.ul`
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
 `;
 
+const ThemeToggle = styled.div`
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 16px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: rotate(15deg) scale(1.1);
+    background: ${({ theme }) => theme.primary};
+    color: white;
+  }
+`;
+
+
 const scrollWithOffset = (id) => {
     const element = document.getElementById(id);
     const yOffset = -80;
@@ -147,7 +172,7 @@ const scrollWithOffset = (id) => {
 };
 
 
-const Navbar = () => {
+const Navbar = ({ toggleTheme, isDark }) => {
     const [isOpen, setIsOpen] = useState(false);
     const theme = useTheme();
     return (
@@ -232,6 +257,11 @@ const Navbar = () => {
                     <GithubButton href={Bio.github} target="_Blank">
                         Github Profile
                     </GithubButton>
+
+                    <ThemeToggle onClick={toggleTheme}>
+                        {isDark ? <LightMode /> : <DarkMode />}
+                    </ThemeToggle>
+
                 </ButtonContainer>
             </NavbarContainer>
         </Nav>

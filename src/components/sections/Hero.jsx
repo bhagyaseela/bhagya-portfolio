@@ -13,6 +13,7 @@ import StarCanvas from "../canvas/Stars";
 import Spline from "@splinetool/react-spline";
 
 
+
 const HeroContainer = styled.div`
 
 //   border: 1px solid white;  
@@ -295,6 +296,9 @@ const Hero = () => {
                                     <Spline
                                         scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
                                         style={{ width: "100%", height: "100%" }}
+                                        // variables={{
+                                        //     theme: isDark ? "Dark" : "Light",
+                                        // }}
                                     />
                                 </SplineWrapper>
                             </motion.div>
