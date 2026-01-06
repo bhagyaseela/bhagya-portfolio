@@ -18,6 +18,7 @@ import ForegroundCanvas from "./components/canvas/ForegroundCanvas";
 
 
 
+// Styled Components
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
   width: 100%;
@@ -26,6 +27,7 @@ const Body = styled.div`
   
 `;
 
+// Wrapper for sections with gradient background
 const Wrapper = styled.div`
   padding-bottom: 100px;
   background: linear-gradient(
