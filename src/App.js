@@ -24,6 +24,8 @@ const Body = styled.div`
   width: 100%;
   overflow-x: hidden;
   position: relative;
+//   min-height: 100vh;
+//   padding-bottom: 50px;
   
 `;
 
