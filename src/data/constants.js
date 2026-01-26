@@ -1,11 +1,11 @@
 export const Bio = {
   name: "Bhagya Senavirathna",
-  roles: ["Computer Engineering Undergraduate", "Robotics & Full-Stack Developer"],
+  roles: ["Computer Engineering Undergraduate"],
   description:
     "Computer Engineering undergraduate at the University of Peradeniya. I enjoy building end-to-end systems that combine software + hardware — from full-stack dashboards to robotics prototypes. I’m especially interested in AI-driven education tools, automation, and reliable system design.",
-  github: "https://github.com/cepdnaclk", // OR: your personal github profile link
+  github: "https://github.com/bhagyaseela", // OR: your personal github profile link
   resume: "YOUR_RESUME_LINK_HERE",
-  linkedin: "YOUR_LINKEDIN_LINK_HERE",
+  linkedin: "https://www.linkedin.com/in/bhagyasenavirathna/",
   twitter: "",
   insta: "",
   facebook: "",
