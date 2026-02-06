@@ -137,7 +137,7 @@ const Contact = () => {
           Feel free to reach out to me for any questions or opportunities!
         </Desc>
         <ContactForm onSubmit={handelSubmit}>
-          <ContactTitle>Email Me 🚀</ContactTitle>
+          <ContactTitle>Email Me</ContactTitle>
           <ContactInput placeholder="Your Email" name="from_email" />
           <ContactInput placeholder="Your Name" name="from_name" />
           <ContactInput placeholder="Subject" name="subject" />

@@ -2,21 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { Bio } from "../../data/constants";
 import Typewriter from "typewriter-effect";
-import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import {
-    headContainerAnimation,
-    headContentAnimation,
-    headTextAnimation,
+  headContainerAnimation,
+  headContentAnimation,
+  headTextAnimation,
 } from "../../utils/motion";
-import StarCanvas from "../canvas/Stars";
 import Spline from "@splinetool/react-spline";
 
-
-
 const HeroContainer = styled.div`
-
-//   border: 1px solid white;  
+  //   border: 1px solid white;
   display: flex;
   justify-content: center;
   position: relative;
@@ -29,14 +24,15 @@ const HeroContainer = styled.div`
 
   @media (max-width: 640px) {
     padding: 32px 16px;
+    /* mobile-only: avoid clipped look on small screens */
+    clip-path: none;
   }
 
   clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
 `;
 
-
 const HeroInnerContainer = styled.div`
-    // border: 1px solid blue;
+  // border: 1px solid blue
 
   position: relative;
   display: flex;
@@ -56,7 +52,8 @@ const HeroMiddleContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  iframe, canvas {
+  iframe,
+  canvas {
     width: 100%;
     max-width: 380px;
     height: 420px;
@@ -90,25 +87,32 @@ const HeroRightContainer = styled.div`
 `;
 
 const HeroLeftContainer = styled.div`
-//   border: 1px solid red;
+  //   border: 1px solid red;
   width: 800px;
   order: 1;
 
   display: flex;
-  justify-content: ; /* align content left */
+  justify-content: flex-start; /* (was invalid before; same as default) */
   align-items: flex-start;
 
   overflow: visible; /* allow overflow */
 
   @media (max-width: 960px) {
+    /* mobile/tablet-only overrides */
+    width: 100%;
     order: 2;
-    flex-direction: column;
     align-items: center;
-    height: 200px;
+    justify-content: center;
+    height: auto; /* was 200px (caused clipping) */
     margin-bottom: 30px;
+    overflow: hidden; /* prevent horizontal scroll from Spline canvas */
   }
-`;
 
+    @media (max-width: 640px) {
+    width: 100%;
+    height: auto;
+    margin-left: -150px;
+`;
 
 const Title = styled.div`
   font-weight: 800;
@@ -125,6 +129,12 @@ const Title = styled.div`
     line-height: 48px;
     margin-bottom: 8px;
   }
+
+  /* mobile-only: slightly smaller to fit nicely */
+  @media (max-width: 640px) {
+    font-size: 32px;
+    line-height: 40px;
+  }
 `;
 
 const TextLoop = styled.div`
@@ -137,19 +147,35 @@ const TextLoop = styled.div`
 
   @media (max-width: 960px) {
     text-align: center;
-  }
-
-  @media (max-width: 960px) {
     font-size: 22px;
     line-height: 48px;
     margin-bottom: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* MOBILE: split into 2 lines */
+  @media (max-width: 640px) {
+    flex-direction: column;     /* "I am a" on line 1, typewriter on line 2 */
+    align-items: center;
+    gap: 4px;
+    line-height: 1.2;
   }
 `;
 
 const Span = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.primary};
+
+  /* MOBILE: keep typewriter in one line (no multi-line jump) */
+  @media (max-width: 640px) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;   /* optional: prevent overflow */
+    max-width: 90vw;           /* adjust if needed */
+  }
 `;
+
 
 const SubTitle = styled.div`
   font-size: 20px;
@@ -166,7 +192,6 @@ const SubTitle = styled.div`
     margin: 0 auto 32px auto;
   }
 `;
-
 
 const ResumeButton = styled.a`
   -webkit-appearance: button;
@@ -202,40 +227,33 @@ const ResumeButton = styled.a`
   font-weight: 600;
   font-size: 20px;
 
-     &:hover {
-        transform: scale(1.05);
+  &:hover {
+    transform: scale(1.05);
     transition: all 0.4s ease-in-out;
-    box-shadow:  20px 20px 60px #1F2634,
+    box-shadow: 20px 20px 60px #1f2634;
     filter: brightness(1);
-    }    
-    
-    
-@media (max-width: 640px) {
-  padding: 12px 0;
-  font-size: 18px;
-  margin: 0 auto;
-  text-align: center;
-}
+  }
 
-    color: white;
-`;
-
-const Img = styled.img`
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-  max-width: 400px;
-  max-height: 400px;
-  border: 2px solid ${({ theme }) => theme.primary};
+  /* tablet/mobile-only: remove desktop offset so it centers properly */
+  @media (max-width: 960px) {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    max-width: 320px;
+  }
 
   @media (max-width: 640px) {
-    max-width: 280px;
-    max-height: 280px;
+    padding: 12px 0;
+    font-size: 18px;
+    margin: 0 auto;
+    text-align: center;
   }
+
+  color: white;
 `;
 
 const HeroBg = styled.div`
-//   border: 1px solid white;
+  //   border: 1px solid white;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -264,86 +282,74 @@ const SplineWrapper = styled.div`
   height: 750px;
 
   @media (max-width: 960px) {
-    width: 500px;
-    height: 480px;
-    position : relative;
-    left: -80px;
+    /* mobile/tablet-only: center + resize (no desktop change) */
+    width: 520px;
+    height: 520px;
+    position: relative;
+    left: 0;        /* was -80px (caused side cut / overflow) */
+    margin: 0 auto;
   }
 
   @media (max-width: 640px) {
-    width: 320px;
-    height: 300px;
+    width: 100%;
+    max-width: 340px;
+    height: 340px;
   }
 `;
 
-
 const Hero = () => {
-    return (
-        <div id="About">
-            <HeroContainer>
-                <HeroBg>
-                    {/* <StarCanvas /> */}
-                    {/* <HeroBgAnimation /> */}
-                </HeroBg>
+  return (
+    <div id="About">
+      <HeroContainer>
+        <HeroBg>{/* <StarCanvas /> */}</HeroBg>
 
-                <motion.div {...headContainerAnimation}>
-                    <HeroInnerContainer>
-
-                        {/* MIDDLE – 3D ROBOT */}
-                        <HeroLeftContainer>
-                            <motion.div {...headContentAnimation}>
-                                <SplineWrapper>
-                                    <Spline
-                                        scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
-                                        style={{ width: "100%", height: "100%" }}
-                                        />
-                                </SplineWrapper>
-                            </motion.div>
-                        </HeroLeftContainer>
-
-                        <HeroRightContainer>
-                            <motion.div {...headTextAnimation}>
-                                <Title>
-                                    Hi, I am <br /> {Bio.name}
-                                </Title>
-                                <TextLoop>
-                                    I am a
-                                    <Span>
-                                        <Typewriter
-                                            options={{
-                                                strings: Bio.roles,
-                                                autoStart: true,
-                                                loop: true,
-                                            }}
-                                        />
-                                    </Span>
-                                </TextLoop>
-                            </motion.div>
-
-                            <motion.div {...headContentAnimation}>
-                                <SubTitle>{Bio.description}</SubTitle>
-                            </motion.div>
-
-                            <ResumeButton href={Bio.resume} target="_blank">
-                                Check Resume
-                            </ResumeButton>
-                        </HeroRightContainer>
-
-
-
-                        {/* <HeroRightContainer>
+        <motion.div {...headContainerAnimation}>
+          <HeroInnerContainer>
+            {/* LEFT – 3D ROBOT */}
+            <HeroLeftContainer>
               <motion.div {...headContentAnimation}>
-                <Tilt>
-                  <Img src={HeroImg} alt="Rishav Chanda" />
-                </Tilt>
+                <SplineWrapper>
+                  <Spline
+                    scene="https://prod.spline.design/8d2cyAr-nDVm-pVc/scene.splinecode"
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </SplineWrapper>
               </motion.div>
-            </HeroRightContainer> */}
+            </HeroLeftContainer>
 
-                    </HeroInnerContainer>
-                </motion.div>
-            </HeroContainer>
-        </div>
-    );
+            {/* RIGHT – TEXT */}
+            <HeroRightContainer>
+              <motion.div {...headTextAnimation}>
+                <Title>
+                  Hi, I am <br /> {Bio.name}
+                </Title>
+                <TextLoop>
+                  I am a
+                  <Span>
+                    <Typewriter
+                      options={{
+                        strings: Bio.roles,
+                        autoStart: true,
+                        loop: true,
+                      }}
+                    />
+                  </Span>
+                </TextLoop>
+              </motion.div>
+
+              <motion.div {...headContentAnimation}>
+                <SubTitle>{Bio.description}</SubTitle>
+              </motion.div>
+
+              <ResumeButton href={Bio.resume} target="_blank" rel="noreferrer">
+                Check Resume
+              </ResumeButton>
+            </HeroRightContainer>
+          </HeroInnerContainer>
+        </motion.div>
+      </HeroContainer>
+    </div>
+  );
 };
 
 export default Hero;
