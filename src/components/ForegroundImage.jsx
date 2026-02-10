@@ -9,7 +9,7 @@ const SPEED = 0.5;
 
 /* Mobile tuning */
 const RIGHT_DEFAULT_MOBILE = -40; // less negative so it stays visible
-const IMAGE_SIZE_MOBILE = 480;    // smaller height on mobile
+const IMAGE_SIZE_MOBILE = 320;    // smaller height on mobile
 const MOBILE_MAX_SHIFT = 300;     // limit how far it moves on mobile
 const DESKTOP_MAX_SHIFT = 600;    // your current max shift
 

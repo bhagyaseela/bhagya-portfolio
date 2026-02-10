@@ -111,7 +111,8 @@ const HeroLeftContainer = styled.div`
     @media (max-width: 640px) {
     width: 100%;
     height: auto;
-    margin-left: -150px;
+    margin-left: -100px;
+    margin-top: -50px;
 `;
 
 const Title = styled.div`
@@ -156,6 +157,7 @@ const TextLoop = styled.div`
 
   /* MOBILE: split into 2 lines */
   @media (max-width: 640px) {
+    font-size: 18px;
     flex-direction: column;     /* "I am a" on line 1, typewriter on line 2 */
     align-items: center;
     gap: 4px;

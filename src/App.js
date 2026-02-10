@@ -15,7 +15,8 @@ import Contact from "./components/sections/Contact";
 import Footer from "./components/sections/Footer";
 import ForegroundImage from "./components/ForegroundImage";
 import ForegroundCanvas from "./components/canvas/ForegroundCanvas";
-
+import Leadership from "./components/sections/Leadership";
+import Awards from "./components/sections/Awards";
 
 
 // Styled Components
@@ -76,6 +77,8 @@ function App() {
                         <Projects />
                         <Wrapper>
                             <Education />
+                            <Leadership />
+                            <Awards />
                             <Contact />
                         </Wrapper>
                         <Footer />

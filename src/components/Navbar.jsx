@@ -178,7 +178,7 @@ const Navbar = ({ toggleTheme, isDark }) => {
     return (
         <Nav>
             <NavbarContainer>
-                <NavLogo to="/">Seela</NavLogo>
+                <NavLogo to="/">Bhagya Senavirathna</NavLogo>
 
                 <MobileIcon onClick={() => setIsOpen(!isOpen)}>
                     <MenuRounded style={{ color: "inherit" }} />
