@@ -1,65 +1,104 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ForegroundImg from "../images/myprofile.png";
 
-/* 🔧 TUNABLE VALUES */
-const RIGHT_DEFAULT = -150;      // desktop default
-const IMAGE_SIZE = 920;         // desktop height
+/* ✅ Baseline resolution */
+const BASE_W = 1920;
+const BASE_H = 1080;
+
+/* ✅ Baseline values (your current working values at 1920×1080) */
+const RIGHT_DEFAULT_PCT = -150 / BASE_W;     // % of screen width
+const IMAGE_SIZE_PCT = 1050 / BASE_H;         // % of screen height
+const DESKTOP_SHIFT_PCT = 600 / BASE_W;      // % of screen width
+
+/* Mobile baseline values (kept as px, but you can also convert to pct if you want) */
+const MOBILE_RIGHT_DEFAULT_PX = -40;
+const MOBILE_IMAGE_SIZE_PX = clamp(320, 240, 420);
+const MOBILE_MAX_SHIFT_PX = 300;
+
 const SPEED = 0.5;
 
-/* Mobile tuning */
-const RIGHT_DEFAULT_MOBILE = -40; // less negative so it stays visible
-const IMAGE_SIZE_MOBILE = 320;    // smaller height on mobile
-const MOBILE_MAX_SHIFT = 300;     // limit how far it moves on mobile
-const DESKTOP_MAX_SHIFT = 600;    // your current max shift
+/* helpers */
+function clamp(v, min, max) {
+  return Math.max(min, Math.min(max, v));
+}
+
+function getResponsiveParams() {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const isMobile = w <= 768;
+
+  if (isMobile) {
+    return {
+      isMobile,
+      rightDefault: MOBILE_RIGHT_DEFAULT_PX,
+      imgSize: MOBILE_IMAGE_SIZE_PX,
+      maxShift: MOBILE_MAX_SHIFT_PX,
+    };
+  }
+
+  // ✅ percentage based on 1920×1080
+  const rightDefault = RIGHT_DEFAULT_PCT * w;     // px
+  const imgSize = IMAGE_SIZE_PCT * h;             // px
+  const maxShift = DESKTOP_SHIFT_PCT * w;         // px
+
+  return {
+    isMobile,
+    rightDefault: Math.round(rightDefault),
+    imgSize: Math.round(clamp(imgSize, 500, 1100)),     // safety clamp
+    maxShift: Math.round(clamp(maxShift, 300, 900)),    // safety clamp
+  };
+}
 
 const FloatingImage = styled.img`
   position: fixed;
   bottom: 0px;
   right: ${({ offset }) => offset}px;
-  height: ${IMAGE_SIZE}px;
+  height: ${({ imgSize }) => imgSize}px;
   object-fit: cover;
-  z-index: 9999;
   pointer-events: none;
   transition: right ${SPEED}s ease-out;
 
-  /* ✅ Mobile: show, but smaller */
+  z-index: ${({ isMobile }) => (isMobile ? 5 : 9999)};
+
   @media (max-width: 768px) {
-    height: ${IMAGE_SIZE_MOBILE}px;
-    margin-right: -70px; /* optional: shift left a bit to keep more visible on small screens */
-    // opacity: 0.9;
-    /* optional: slightly behind content so it won't feel too strong */
-    z-index: 5;
+    margin-right: -70px; /* optional */
   }
 `;
 
 const ForegroundImage = () => {
-  const [offset, setOffset] = useState(RIGHT_DEFAULT);
+  const [params, setParams] = useState(() => getResponsiveParams());
+  const [offset, setOffset] = useState(params.rightDefault);
 
+  // update on resize
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-      const base = isMobile ? RIGHT_DEFAULT_MOBILE : RIGHT_DEFAULT;
-      const maxShift = isMobile ? MOBILE_MAX_SHIFT : DESKTOP_MAX_SHIFT;
-
-      // move further right as user scrolls down (same logic)
-      const dynamicOffset = base - Math.min(scrollY * 1.0, maxShift);
-      setOffset(dynamicOffset);
-    };
-
-    handleScroll(); // set initial correct state
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll); // update on rotate/responsive changes
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
+    const onResize = () => setParams(getResponsiveParams());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  return <FloatingImage src={ForegroundImg} offset={offset} alt="" />;
+  // update on scroll + when params change
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || 0;
+      const shift = Math.min(scrollY, params.maxShift);
+      setOffset(params.rightDefault - shift);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [params.rightDefault, params.maxShift]);
+
+  return (
+    <FloatingImage
+      src={ForegroundImg}
+      offset={offset}
+      imgSize={params.imgSize}
+      isMobile={params.isMobile}
+      alt=""
+    />
+  );
 };
 
 export default ForegroundImage;

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { awards } from "../../data/constants";
 
@@ -59,9 +59,59 @@ const Track = styled.div`
   transform-style: preserve-3d;
   overflow: visible;
 
+  /* ✅ better swipe experience on mobile */
+  touch-action: pan-y;
+
   @media (max-width: 768px) {
     height: 540px;
   }
+`;
+
+const ArrowBtn = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+
+  color: ${({ theme }) => theme.text_primary};
+  font-weight: 900;
+  font-size: 18px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-50%) scale(1.04);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.98);
+  }
+
+  /* ✅ hide arrows on mobile */
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const LeftArrow = styled(ArrowBtn)`
+  left: -80px;
+`;
+
+const RightArrow = styled(ArrowBtn)`
+  right: -80px;
 `;
 
 const CardSlot = styled.div`
@@ -150,11 +200,7 @@ const Img = styled.img`
 const MediaOverlay = styled.div`
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.6)
-  );
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
 `;
 
 const Badge = styled.div`
@@ -214,31 +260,6 @@ const Chip = styled.span`
   border: 1px solid rgba(255, 255, 255, 0.08);
 `;
 
-const Controls = styled.div`
-  display: flex;
-  gap: 10px;
-  margin-top: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
-`;
-
-const Btn = styled.button`
-  border: none;
-  cursor: pointer;
-  padding: 10px 14px;
-  border-radius: 14px;
-  font-weight: 900;
-  color: ${({ theme }) => theme.text_primary};
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  transition: transform 0.15s ease, background 0.15s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.1);
-  }
-`;
-
 const Dots = styled.div`
   display: flex;
   gap: 8px;
@@ -251,150 +272,175 @@ const Dot = styled.button`
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.25);
   background: ${({ active }) =>
-    active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.15)"};
+        active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.15)"};
   cursor: pointer;
 `;
 
 function wrapOffset(offset, n) {
-  // choose nearest direction (so carousel loops nicely)
-  if (offset > n / 2) return offset - n;
-  if (offset < -n / 2) return offset + n;
-  return offset;
+    if (offset > n / 2) return offset - n;
+    if (offset < -n / 2) return offset + n;
+    return offset;
 }
 
 const AwardsCarousel3D = () => {
-  const [index, setIndex] = useState(0);
-  const drag = useRef({ down: false, x: 0 });
+    const [index, setIndex] = useState(0);
+    const drag = useRef({ down: false, x: 0, y: 0 });
 
-  const n = awards.length;
+    const cards = useMemo(() => awards, []);
+    const n = cards.length;
 
-  const next = () => setIndex((i) => (i + 1) % n);
-  const prev = () => setIndex((i) => (i - 1 + n) % n);
+    const next = () => setIndex((i) => (i + 1) % n);
+    const prev = () => setIndex((i) => (i - 1 + n) % n);
 
-  const onPointerDown = (e) => {
-    drag.current.down = true;
-    drag.current.x = e.clientX;
-  };
-  const onPointerUp = () => {
-    drag.current.down = false;
-  };
-  const onPointerMove = (e) => {
-    if (!drag.current.down) return;
-    const dx = e.clientX - drag.current.x;
-    if (Math.abs(dx) > 45) {
-      drag.current.x = e.clientX;
-      dx > 0 ? prev() : next();
-    }
-  };
+    // ✅ desktop keyboard arrows (optional but nice)
+    useEffect(() => {
+        const onKey = (e) => {
+            if (e.key === "ArrowLeft") prev();
+            if (e.key === "ArrowRight") next();
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+    }, [n]);
 
-  const cards = useMemo(() => awards, []);
+    // ✅ Swipe (mobile) + drag (desktop)
+    const onPointerDown = (e) => {
+        drag.current.down = true;
+        drag.current.x = e.clientX;
+        drag.current.y = e.clientY;
+    };
 
-  return (
-    <Container id="Awards">
-      <Wrapper>
-        <Title>Awards</Title>
-        <Desc>3D carousel — drag or use arrows to browse.</Desc>
+    const onPointerUp = () => {
+        drag.current.down = false;
+    };
 
-        <Stage>
-          <Track
-            onPointerDown={onPointerDown}
-            onPointerUp={onPointerUp}
-            onPointerLeave={onPointerUp}
-            onPointerMove={onPointerMove}
-          >
-            {cards.map((a, i) => {
-              let offset = wrapOffset(i - index, n);
-              const abs = Math.abs(offset);
+    const onPointerMove = (e) => {
+        if (!drag.current.down) return;
 
-              // ✅ Coverflow tuning (adjust if you want)
-              const x = offset * 260; // left/right spacing
-              const rotY = offset * -38; // tilt
-              const z = -abs * 140; // push back
-              const scale = Math.max(0.78, 1 - abs * 0.12);
-              const opacity = abs > 3 ? 0 : 1 - abs * 0.22;
-              const blur = abs === 0 ? 0 : Math.min(2.2, abs * 0.7);
+        const dx = e.clientX - drag.current.x;
+        const dy = e.clientY - drag.current.y;
 
-              return (
-                <CardSlot
-                  key={a.id}
-                  style={{
-                    transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) scale(${scale})`,
-                    opacity,
-                    zIndex: 100 - abs,
-                    filter: `blur(${blur}px)`,
-                    transition:
-                      "transform 650ms cubic-bezier(0.2,0.8,0.2,1), opacity 350ms ease, filter 350ms ease",
-                    cursor: abs === 0 ? "default" : "pointer",
-                    pointerEvents: opacity === 0 ? "none" : "auto",
-                  }}
-                  onClick={() => setIndex(i)}
-                >
-                  <Shell>
-                    <Glow />
-                    <Card>
-                      <Pattern />
+        // If user is scrolling vertically more than horizontal, ignore
+        if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 12) return;
 
-                      <Media>
-                        {a.image ? (
-                          <Img src={a.image} alt={a.title} />
-                        ) : (
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              fontWeight: 900,
-                              opacity: 0.6,
-                            }}
-                          >
-                            Add award image
-                          </div>
-                        )}
-                        <MediaOverlay />
-                        <Badge>🏆 {a.year}</Badge>
-                      </Media>
+        if (Math.abs(dx) > 45) {
+            drag.current.x = e.clientX;
+            dx > 0 ? prev() : next();
+        }
+    };
 
-                      <Content>
-                        <H>{a.title}</H>
-                        <Sub>{a.org}</Sub>
-                        <P>{a.desc}</P>
+    return (
+        <Container id="Awards">
+            <Wrapper>
+                <Title>Awards</Title>
+                <Desc>Click side cards or use arrows (swipe on mobile).</Desc>
 
-                        {Array.isArray(a.tags) && a.tags.length > 0 && (
-                          <Chips>
-                            {a.tags.map((t, idx) => (
-                              <Chip key={idx}>{t}</Chip>
-                            ))}
-                          </Chips>
-                        )}
-                      </Content>
-                    </Card>
-                  </Shell>
-                </CardSlot>
-              );
-            })}
-          </Track>
-        </Stage>
+                <Stage>
+                    <Track
+                        onPointerDown={onPointerDown}
+                        onPointerUp={onPointerUp}
+                        onPointerLeave={onPointerUp}
+                        onPointerMove={onPointerMove}
+                    >
+                        {/* ✅ side arrows (desktop only) */}
+                        <LeftArrow onClick={prev} aria-label="Previous award">
+                            ‹
+                        </LeftArrow>
+                        <RightArrow onClick={next} aria-label="Next award">
+                            ›
+                        </RightArrow>
 
-        <Controls>
-          <Btn onClick={prev}>← Prev</Btn>
-          <Btn onClick={next}>Next →</Btn>
-        </Controls>
+                        {cards.map((a, i) => {
+                            let offset = wrapOffset(i - index, n);
+                            const abs = Math.abs(offset);
 
-        <Dots>
-          {cards.map((_, i) => (
-            <Dot
-              key={i}
-              active={i === index}
-              onClick={() => setIndex(i)}
-              aria-label={`Go to award ${i + 1}`}
-            />
-          ))}
-        </Dots>
-      </Wrapper>
-    </Container>
-  );
+                            // Coverflow tuning
+                            const x = offset * 260;
+                            const rotY = offset * -38;
+                            const z = -abs * 140;
+                            const scale = Math.max(0.78, 1 - abs * 0.12);
+                            const opacity = abs > 3 ? 0 : 1 - abs * 0.22;
+                            const blur = abs === 0 ? 0 : Math.min(2.2, abs * 0.7);
+
+                            return (
+                                <CardSlot
+                                    key={a.id}
+                                    style={{
+                                        transform: `translate(-50%, -50%) translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) scale(${scale})`,
+                                        opacity,
+                                        zIndex: 100 - abs,
+                                        filter: `blur(${blur}px)`,
+                                        transition:
+                                            "transform 650ms cubic-bezier(0.2,0.8,0.2,1), opacity 350ms ease, filter 350ms ease",
+                                        cursor: abs === 0 ? "default" : "pointer",
+                                        pointerEvents: opacity === 0 ? "none" : "auto",
+                                    }}
+                                    onClick={() => {
+                                        if (abs === 0) return;
+                                        offset > 0 ? next() : prev();
+                                    }} // ✅ click visible cards to select
+                                >
+                                    <Shell>
+                                        <Glow />
+                                        <Card>
+                                            <Pattern />
+
+                                            <Media>
+                                                {a.image ? (
+                                                    <Img src={a.image} alt={a.title} />
+                                                ) : (
+                                                    <div
+                                                        style={{
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            display: "flex",
+                                                            alignItems: "center",
+                                                            justifyContent: "center",
+                                                            fontWeight: 900,
+                                                            opacity: 0.6,
+                                                        }}
+                                                    >
+                                                        Add award image
+                                                    </div>
+                                                )}
+                                                <MediaOverlay />
+                                                <Badge>🏆 {a.year}</Badge>
+                                            </Media>
+
+                                            <Content>
+                                                <H>{a.title}</H>
+                                                <Sub>{a.org}</Sub>
+                                                <P>{a.desc}</P>
+
+                                                {Array.isArray(a.tags) && a.tags.length > 0 && (
+                                                    <Chips>
+                                                        {a.tags.map((t, idx) => (
+                                                            <Chip key={idx}>{t}</Chip>
+                                                        ))}
+                                                    </Chips>
+                                                )}
+                                            </Content>
+                                        </Card>
+                                    </Shell>
+                                </CardSlot>
+                            );
+                        })}
+                    </Track>
+                </Stage>
+
+                {/* Dots (optional) */}
+                <Dots>
+                    {cards.map((_, i) => (
+                        <Dot
+                            key={i}
+                            active={i === index}
+                            onClick={() => setIndex(i)}
+                            aria-label={`Go to award ${i + 1}`}
+                        />
+                    ))}
+                </Dots>
+            </Wrapper>
+        </Container>
+    );
 };
 
 export default AwardsCarousel3D;

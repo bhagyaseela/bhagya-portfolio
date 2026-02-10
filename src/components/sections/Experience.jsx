@@ -8,7 +8,7 @@ import ExperienceCard from "../cards/ExperienceCard";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-contnet: center;
+  justify-content: center;
   margin-top: 50px;
   position: rlative;
   z-index: 1;
@@ -50,30 +50,29 @@ const Desc = styled.div`
 `;
 
 const Experience = () => {
-  return (
-    <Container id="Experience">
-      <Wrapper>
-        <Title>Experience</Title>
-        <Desc
-          style={{
-            marginBottom: "40px",
-          }}
-        >
-          My work experience as a software engineer and working on different
-          companies and projects.
-        </Desc>
+    return (
+        <Container id="Experience">
+            <Wrapper>
+                <Title>Experience</Title>
+                <Desc
+                    style={{
+                        marginBottom: "40px",
+                    }}
+                >
+                    My experience includes academic, teaching, and project-based work across full-stack development, AI/ML, and embedded systems.
+                </Desc>
 
-        <VerticalTimeline>
-          {experiences.map((experience, index) => (
-            <ExperienceCard
-              key={`experience-${index}`}
-              experience={experience}
-            />
-          ))}
-        </VerticalTimeline>
-      </Wrapper>
-    </Container>
-  );
+                <VerticalTimeline>
+                    {experiences.map((experience, index) => (
+                        <ExperienceCard
+                            key={`experience-${index}`}
+                            experience={experience}
+                        />
+                    ))}
+                </VerticalTimeline>
+            </Wrapper>
+        </Container>
+    );
 };
 
 export default Experience;

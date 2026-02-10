@@ -8,6 +8,12 @@ import image2 from "../images/awards/2.jpeg";
 import image3 from "../images/awards/3.jpeg";
 import image4 from "../images/awards/4.jpeg";
 import image5 from "../images/awards/5.jpeg";
+import project1 from "../images/projects/1.png";
+import project2 from "../images/projects/2.png";
+import project3 from "../images/projects/3.png";
+import project4 from "../images/projects/4.png";
+import project5 from "../images/projects/5.png";
+import project6 from "../images/projects/6.png";
 
 
 
@@ -269,9 +275,9 @@ export const projects = [
     date: "2025",
     description:
       "An interactive desk companion robot built on Raspberry Pi. Includes face tracking (dual-axis servos), OLED eye animations, and integrated controller logic to coordinate hardware modules for responsive interaction.",
-    image: "YOUR_PROJECT_IMAGE_LINK_HERE",
+    image: project1,
     tags: ["Raspberry Pi", "Python", "OpenCV", "MediaPipe", "OLED", "Servo Control"],
-    category: "robotics",
+    category: ["hardware","AI/ML"],
     github: "https://github.com/cepdnaclk/e20-3yp-P-E-BO-Desk-Companion",
     webapp: "https://cepdnaclk.github.io/e20-3yp-P-E-BO-Desk-Companion/",
   },
@@ -281,7 +287,7 @@ export const projects = [
     date: "2024",
     description:
       "A real-time industrial dashboard for monitoring mold protector machines with live status and stage tracking. Implemented backend endpoints, database handling, and real-time updates via Socket.io with a Python simulator for realistic event testing.",
-    image: "YOUR_PROJECT_IMAGE_LINK_HERE",
+    image: project2,
     tags: ["React", "Node.js", "MongoDB", "Socket.io", "REST APIs", "Python"],
     category: "web app",
     github: "https://github.com/cepdnaclk/e20-co227-MONA-Dashboard",
@@ -293,9 +299,9 @@ export const projects = [
     date: "2025 - Present",
     description:
       "An AI-powered platform to analyze student submissions and generate structured feedback to improve turnaround time and consistency. Integrates with Moodle LMS via REST APIs and stores evaluation data for scalable grading and tutoring workflows.",
-    image: "YOUR_PROJECT_IMAGE_LINK_HERE",
+    image: project3,
     tags: ["Python", "Moodle API", "AI/NLP", "MySQL", "REST APIs"],
-    category: "ai system",
+    category: ["web app","AI/ML"],
     github: "YOUR_FYP_REPO_LINK_HERE",
     webapp: "",
   },
@@ -307,7 +313,7 @@ export const projects = [
     date: "2024",
     description:
       "Designed a 32-bit RV32IM five-stage pipelined processor (IF, ID, EX, MEM, WB) supporting the full RV32IM instruction set. Implemented hazard handling with forwarding, stalling, and branch prediction, and performed timing/power analysis.",
-    image: "YOUR_PROJECT_IMAGE_LINK_HERE",
+    image: project4,
     tags: ["Verilog", "RISC-V", "GTKWave", "PrimeTime", "PrimePower"],
     category: "hardware",
     github:
@@ -320,7 +326,7 @@ export const projects = [
     date: "2023",
     description:
       "Designed and implemented an 8-bit single-cycle processor supporting arithmetic, logical, move, immediate, jump, and branch instructions. Built core modules (ALU, register file, control logic, datapath) and extended the design with data memory and cache for read/write operations.",
-    image: "YOUR_PROJECT_IMAGE_LINK_HERE",
+    image: project5,
     tags: ["Verilog", "Computer Architecture", "GTKWave"],
     category: "hardware",
     github: "", // add repo link if you have it
@@ -332,9 +338,9 @@ export const projects = [
     date: "2024",
     description:
       "Implemented grayscale-to-color conversion using classical image processing techniques, exploring spatial and frequency domain approaches. Useful for restoring historical photos and enhancing domain-specific imagery.",
-    image: "YOUR_PROJECT_IMAGE_LINK_HERE",
+    image: project6,
     tags: ["Python", "Image Processing", "OpenCV", "NumPy"],
-    category: "ai/ml",
+    category: "AI/ML",
     github:
       "https://github.com/cepdnaclk/e20-co543-Colorization-of-Grayscale-Images-Using-Image-Processing-Techniques.git",
     webapp: "",

@@ -6,8 +6,8 @@ import { Tilt } from "react-tilt";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-contnet: center;
-  position: rlative;
+  justify-content: center;
+  position: relative;
   z-index: 1;
   align-items: center;
 `;
@@ -21,26 +21,31 @@ const Wrapper = styled.div`
   width: 100%;
   max-width: 1100px;
   gap: 12px;
+
   @media (max-width: 960px) {
     flex-direction: column;
   }
 `;
+
 const Title = styled.div`
   font-size: 52px;
   text-align: center;
   font-weight: 600;
   margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
+
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
   }
 `;
+
 const Desc = styled.div`
   font-size: 18px;
   text-align: center;
   font-weight: 600;
   color: ${({ theme }) => theme.text_secondary};
+
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -58,11 +63,22 @@ const SkillsContainer = styled.div`
 const Skill = styled.div`
   width: 100%;
   max-width: 500px;
-  background-color: rgba(17, 25, 40, 0.83);
-  border: 1px solid rgba(255, 255, 255, 0.125);
-  box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px;
+
+  /* ✅ theme-based card background */
+  background: ${({ theme }) => theme.card};
+
+  /* ✅ border that works in both modes */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  /* ✅ shadow works in light + dark */
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 10px 30px;
+
+  /* nice glass feel without forcing dark colors */
+  backdrop-filter: blur(10px);
+
   border-radius: 16px;
   padding: 18px 36px;
+
   @media (max-width: 768px) {
     max-width: 400px;
     padding: 10px 36px;
@@ -89,30 +105,45 @@ const SkillList = styled.div`
   gap: 12px;
   margin-bottom: 20px;
 `;
+
 const SkillItem = styled.div`
   font-size: 16px;
   font-weight: 400;
-  color: ${({ theme }) => theme.text_primary + 80};
-  border: 1px solid ${({ theme }) => theme.text_primary + 80};
+  color: ${({ theme }) => theme.text_primary};
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+
   border-radius: 12px;
   padding: 12px 16px;
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 
+  transition: transform 0.15s ease, background 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
   @media (max-width: 768px) {
     font-size: 14px;
     padding: 8px 12px;
   }
+
   @media (max-width: 500px) {
     font-size: 14px;
     padding: 6px 12px;
   }
 `;
+
 const SkillImage = styled.img`
   width: 24px;
   height: 24px;
+  object-fit: contain;
 `;
 
 const Skills = () => {
@@ -120,24 +151,20 @@ const Skills = () => {
     <Container id="Skills">
       <Wrapper>
         <Title>Skills</Title>
-        <Desc
-          style={{
-            marginBottom: "40px",
-          }}
-        >
-          Here are some of my skills on which I have been working on for the
-          past 3 years.
+        <Desc style={{ marginBottom: "40px" }}>
+          Here are some of my skills on which I have been working on my university life.
         </Desc>
 
         <SkillsContainer>
           {skills.map((skill, index) => (
-            <Tilt>
-              <Skill key={`skill-${index}`}>
+            <Tilt key={`tilt-${index}`}>
+              <Skill>
                 <SkillTitle>{skill.title}</SkillTitle>
+
                 <SkillList>
                   {skill.skills.map((item, index_x) => (
-                    <SkillItem key={`skill-x-${index_x}`}>
-                      <SkillImage src={item.image} />
+                    <SkillItem key={`skill-${index}-${index_x}`}>
+                      {item.image && <SkillImage src={item.image} alt={item.name} />}
                       {item.name}
                     </SkillItem>
                   ))}
