@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/bhagya-portfolio/static/css/main.f1c2752a.css",
-    "main.js": "/bhagya-portfolio/static/js/main.b7d3befa.js",
+    "main.js": "/bhagya-portfolio/static/js/main.585a2a1c.js",
     "static/js/208.73e98956.chunk.js": "/bhagya-portfolio/static/js/208.73e98956.chunk.js",
     "static/js/293.dc42ae39.chunk.js": "/bhagya-portfolio/static/js/293.dc42ae39.chunk.js",
     "static/js/917.1b743f88.chunk.js": "/bhagya-portfolio/static/js/917.1b743f88.chunk.js",
@@ -11,9 +11,18 @@
     "static/js/160.a1112520.chunk.js": "/bhagya-portfolio/static/js/160.a1112520.chunk.js",
     "static/js/23.f72f453a.chunk.js": "/bhagya-portfolio/static/js/23.f72f453a.chunk.js",
     "static/media/myprofile.png": "/bhagya-portfolio/static/media/myprofile.03c7eeafec0c08fdc4f5.png",
+    "static/media/TC.png": "/bhagya-portfolio/static/media/TC.87e741c67d74269d3083.png",
+    "static/media/PERASHOOT.jpg": "/bhagya-portfolio/static/media/PERASHOOT.434a79f593f13b54dad3.jpg",
+    "static/media/1.jpeg": "/bhagya-portfolio/static/media/1.65b1139099e3726029ec.jpeg",
+    "static/media/hackers.png": "/bhagya-portfolio/static/media/hackers.1cbe06a7b62e749ece67.png",
+    "static/media/5.jpeg": "/bhagya-portfolio/static/media/5.1654b5637e188983d90c.jpeg",
+    "static/media/UOP.png": "/bhagya-portfolio/static/media/UOP.724913beeda781a672f9.png",
+    "static/media/2.jpeg": "/bhagya-portfolio/static/media/2.117ecd5fabc117cfc2b5.jpeg",
+    "static/media/4.jpeg": "/bhagya-portfolio/static/media/4.85e234d205835cac3afd.jpeg",
+    "static/media/3.jpeg": "/bhagya-portfolio/static/media/3.2e0396ba624fb6b25c94.jpeg",
     "index.html": "/bhagya-portfolio/index.html",
     "main.f1c2752a.css.map": "/bhagya-portfolio/static/css/main.f1c2752a.css.map",
-    "main.b7d3befa.js.map": "/bhagya-portfolio/static/js/main.b7d3befa.js.map",
+    "main.585a2a1c.js.map": "/bhagya-portfolio/static/js/main.585a2a1c.js.map",
     "208.73e98956.chunk.js.map": "/bhagya-portfolio/static/js/208.73e98956.chunk.js.map",
     "293.dc42ae39.chunk.js.map": "/bhagya-portfolio/static/js/293.dc42ae39.chunk.js.map",
     "917.1b743f88.chunk.js.map": "/bhagya-portfolio/static/js/917.1b743f88.chunk.js.map",
@@ -25,6 +34,6 @@
   },
   "entrypoints": [
     "static/css/main.f1c2752a.css",
-    "static/js/main.b7d3befa.js"
+    "static/js/main.585a2a1c.js"
   ]
 }
