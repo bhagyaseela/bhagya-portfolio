@@ -203,7 +203,7 @@ const ExperienceCard = ({ experience }) => {
                 color: theme.text_primary,
 
                 /* ✅ fixes “timeline gap/line showing outside card” */
-                padding: "16px",
+                padding: "0px",
                 borderRadius: "12px",
                 overflow: "hidden",
 

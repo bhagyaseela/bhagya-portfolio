@@ -23,7 +23,7 @@ export const Bio = {
   description:
     "Computer Engineering undergraduate focused on building practical systems across full-stack web development, and hardware-software integration. Experienced in developing real-time web applications, robotics prototypes, and embedded solutions through university and personal projects. Motivated to apply engineering skills to real-world problems",
   github: "https://github.com/bhagyaseela", // OR: your personal github profile link
-  resume: "YOUR_RESUME_LINK_HERE",
+  resume: "https://drive.google.com/file/d/1Z4BIyaeAtVASzPMPhiOZQ29_qUrxs_NP/view?usp=sharing",
   linkedin: "https://www.linkedin.com/in/bhagyasenavirathna/",
   twitter: "",
   insta: "https://www.instagram.com/bhagya_pranama",
