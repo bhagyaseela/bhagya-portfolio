@@ -332,7 +332,7 @@ const AwardsCarousel3D = () => {
         <Container id="Awards">
             <Wrapper>
                 <Title>Awards</Title>
-                <Desc>Click side cards or use arrows (swipe on mobile).</Desc>
+                {/* <Desc>Click side cards or use arrows (swipe on mobile).</Desc> */}
 
                 <Stage>
                     <Track
